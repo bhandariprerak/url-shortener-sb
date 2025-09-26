@@ -17,7 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter { // Since we extend OncePerRequestFilter, this JwtAuthenticationFilter will be executed once for any incoming request.
 
     @Autowired
     private JwtUtils jwtTokenProvider;
@@ -40,7 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (jwt != null && jwtTokenProvider.validateToken(jwt)){
                 String username = jwtTokenProvider.getUserNameFromJwtToken(jwt);
                 // 3. if valid -> get user details
-                // -- get user name -> load User -> Set the auth context
+                // -- get username -> load User -> Set the auth context
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 if (userDetails != null){
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
